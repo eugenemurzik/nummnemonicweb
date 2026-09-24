@@ -1,0 +1,34 @@
+{
+  "name": "NumMnemonic",
+  "short_name": "NumMnemonic",
+  "description": "Turn phone numbers, PIN codes and long digits into memorable word associations.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#072C3B",
+  "theme_color": "#072C3B",
+  "orientation": "any",
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/us/app/nummnemonic-remember-numbers/id6757535911"
+    },
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.nummnemonic.com",
+      "id": "com.nummnemonic.com"
+    }
+  ],
+  "icons": [
+    {
+      "src": "icons/Icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/Icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
