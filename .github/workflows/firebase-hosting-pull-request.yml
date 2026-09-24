@@ -1,4 +1,6 @@
-name: Flutter Firebase Deployment
+# Pushes to main only run the checks. Live deploys are manual for now:
+#   fvm flutter build web --release --wasm && firebase deploy --only hosting
+name: Flutter Web CI
 on:
   push:
     branches:
@@ -6,39 +8,50 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   build_web:
-    name: Build Flutter (Web)
+    name: Analyze, test and build (Web)
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '3.35.7' # Replace with your project's version of Flutter.
-        channel: 'stable'
-    - run: flutter pub get
-    - run: flutter config --enable-web
-    - run: flutter build web
-    - name: Archive Production Artifact
-      uses: actions/upload-artifact@master
-      with:
-        name: web-build
-        path: build/web
-  deploy:
-      needs: build_web
-      runs-on: ubuntu-latest  
-      steps:
-        - name: checkout
-          uses: actions/checkout@v1
-        - name: Download Artifact
-          uses: actions/download-artifact@master
-          with:
-            name: web-build
-            path: build/web
-        - name: Deploy to Firebase
-          uses: FirebaseExtended/action-hosting-deploy@v0
-          with:
-            repoToken: '${{ secrets.GITHUB_TOKEN }}'
-            firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NUMMNEMONIC }}'
-            channelId: live
-            projectId: nummnemonic
+      - uses: actions/checkout@v4
+      - name: Read Flutter version from .fvmrc
+        id: fvm
+        uses: kuhnroyal/flutter-fvm-config-action/config@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvm.outputs.FLUTTER_VERSION }}
+          channel: ${{ steps.fvm.outputs.FLUTTER_CHANNEL }}
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build web --release --wasm
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
+  deploy_preview:
+    name: Deploy PR preview
+    if: github.event_name == 'pull_request'
+    needs: build_web
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NUMMNEMONIC }}
+          expires: 7d
+          projectId: nummnemonic
+

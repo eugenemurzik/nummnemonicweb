@@ -1,62 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    Alternatively, build your application passing the --base-href parameter
-    specifying the new root path of your web app.
-
-    Fore more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+    If you are serving your web app in a path other than the root, build with
+    --base-href to change this value. It must start and end with a slash.
   -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#072C3B">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>NumMnemonic – Remember Numbers Instantly</title>
+  <meta name="description" content="Turn phone numbers, PIN codes and long digits into memorable word associations using the Major System and PAO method. Free on the App Store and Google Play. No ads.">
+
+  <!-- Open Graph & Twitter. Social crawlers need absolute image URLs; update
+       the domain if the site moves off nummnemonic.web.app. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NumMnemonic">
+  <meta property="og:title" content="NumMnemonic – Remember Numbers Instantly">
+  <meta property="og:description" content="Turn phone numbers, PIN codes and long digits into memorable word associations. Free to download. No ads.">
+  <meta property="og:image" content="https://nummnemonic.web.app/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NumMnemonic – Remember Numbers Instantly">
+  <meta name="twitter:description" content="Turn phone numbers, PIN codes and long digits into memorable word associations. Free to download. No ads.">
+  <meta name="twitter:image" content="https://nummnemonic.web.app/og-image.jpg">
+
+  <!-- iOS -->
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="That Landing Page">
+  <meta name="apple-mobile-web-app-title" content="NumMnemonic">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  
-
-  
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
-
-  <!-- Open Graph & SEO tags -->
-  <meta property="og:title" content="That Landing Page" />
-  <meta property="og:description" content="Built with FlutterFlow." />
-  <meta property="og:image" content="https://storage.googleapis.com/flutterflow-prod-hosting/og_splash_gradient.png" /> 
-  <meta name="twitter:title" content="That Landing Page" />
-  <meta name="twitter:description" content="Built with FlutterFlow." />
-  <meta name="twitter:image" content="https://storage.googleapis.com/flutterflow-prod-hosting/og_splash_gradient.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <title> That Landing Page </title>
-  <meta name="description" content="Built with FlutterFlow." />
-    
-
-  
-
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="manifest" href="manifest.json">
-  
+
+  <style>
+    /* Match the app background so there is no white flash while loading. */
+    html, body { margin: 0; background: #072C3B; }
+  </style>
 </head>
 <body>
-  
-  
-  
-  
-  
-  <script>
-    {{flutter_bootstrap_js}}
-  </script>
+  <!-- Plain-HTML fallback for crawlers and visitors without JavaScript. -->
+  <noscript>
+    <main style="font-family: system-ui, sans-serif; color: #fff; max-width: 720px; margin: 0 auto; padding: 48px 16px;">
+      <h1>NumMnemonic – Remember Numbers Instantly</h1>
+      <p>Turn phone numbers, PIN codes and long digits into memorable word associations using proven mnemonic systems: the Major System, the PAO method and daily practice.</p>
+      <p>
+        <a style="color: #B3A6FF" href="https://apps.apple.com/us/app/nummnemonic-remember-numbers/id6757535911">Download on the App Store</a> ·
+        <a style="color: #B3A6FF" href="https://play.google.com/store/apps/details?id=com.nummnemonic.com">Get it on Google Play</a>
+      </p>
+      <p>Free to download. No ads.</p>
+      <p>
+        <a style="color: #B3A6FF" href="/privacy">Privacy Policy</a> ·
+        <a style="color: #B3A6FF" href="mailto:nummnemonic@proton.me">nummnemonic@proton.me</a>
+      </p>
+    </main>
+  </noscript>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
