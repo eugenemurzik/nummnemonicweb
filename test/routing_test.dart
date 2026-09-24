@@ -3,7 +3,7 @@ import 'package:nummnemonicweb/config/app_links.dart';
 import 'package:nummnemonicweb/ui/features/home/views/home_screen.dart';
 import 'package:nummnemonicweb/ui/features/not_found/views/not_found_screen.dart';
 import 'package:nummnemonicweb/ui/features/privacy/views/privacy_screen.dart';
-import 'package:url_launcher/link.dart';
+import 'package:nummnemonicweb/ui/core/widgets/text_link.dart';
 
 import 'helpers.dart';
 
@@ -35,22 +35,28 @@ void main() {
     expect(find.byType(HomeScreen), findsNothing);
   });
 
-  // Following a Link to an app route goes through the engine's navigation
-  // channel, which flutter_test does not deliver, so this checks the target
-  // instead of tapping.
-  testWidgets('footer links point at app routes and support email', (
+  testWidgets('footer Privacy Policy link opens the privacy policy', (
     tester,
   ) async {
     await pumpApp(tester);
 
-    Uri? linkTarget(String label) => tester
-        .widget<Link>(
-          find.ancestor(of: find.text(label), matching: find.byType(Link)),
-        )
-        .uri;
+    final privacyLink = find.text('Privacy Policy');
+    await tester.ensureVisible(privacyLink);
+    await tester.tap(privacyLink);
+    await tester.pumpAndSettle();
 
-    expect(linkTarget('Home'), Uri.parse('/'));
-    expect(linkTarget('Privacy Policy'), Uri.parse('/privacy'));
-    expect(linkTarget('nummnemonic@proton.me'), AppLinks.supportEmailUri);
+    expect(find.byType(PrivacyScreen), findsOneWidget);
+  });
+
+  testWidgets('footer email link targets the support address', (tester) async {
+    await pumpApp(tester);
+
+    final emailLink = tester.widget<TextLink>(
+      find.ancestor(
+        of: find.text(AppLinks.supportEmail),
+        matching: find.byType(TextLink),
+      ),
+    );
+    expect(emailLink.uri, AppLinks.supportEmailUri);
   });
 }
