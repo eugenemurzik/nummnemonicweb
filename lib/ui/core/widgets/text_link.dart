@@ -1,13 +1,20 @@
+import 'dart:async';
+
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/app_theme.dart';
 
 /// Inline text link.
 ///
-/// Built on [Link], so on the web it renders a real `<a href>`: the browser
-/// shows the URL on hover and supports middle-click and "open in new tab".
-/// Web URLs open in a new tab; app routes and `mailto:` links open in place.
+/// App routes (URIs without a scheme) navigate with go_router. Other URIs are
+/// opened with url_launcher: web URLs in a new tab, and `mailto:` in the
+/// current tab so the mail app opens without leaving a blank tab behind.
+///
+/// This deliberately handles the tap itself instead of using url_launcher's
+/// `Link` widget. On the web `Link` only follows a tap when the browser's
+/// click also lands on its hidden `<a>` element, which failed in production.
 class TextLink extends StatelessWidget {
   const TextLink({
     super.key,
@@ -20,16 +27,25 @@ class TextLink extends StatelessWidget {
   final Uri uri;
   final TextStyle? style;
 
+  void _open(BuildContext context) {
+    if (!uri.hasScheme) {
+      context.go(uri.toString());
+      return;
+    }
+
+    final isWebUrl = uri.isScheme('http') || uri.isScheme('https');
+    unawaited(launchUrl(uri, webOnlyWindowName: isWebUrl ? '_blank' : '_self'));
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isWebUrl = uri.isScheme('http') || uri.isScheme('https');
     final baseStyle = style ?? Theme.of(context).textTheme.bodyMedium;
 
-    return Link(
-      uri: uri,
-      target: isWebUrl ? LinkTarget.blank : LinkTarget.self,
-      builder: (context, followLink) => InkWell(
-        onTap: followLink,
+    return Semantics(
+      link: true,
+      linkUrl: uri,
+      child: InkWell(
+        onTap: () => _open(context),
         borderRadius: BorderRadius.circular(4),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
