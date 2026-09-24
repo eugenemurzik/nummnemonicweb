@@ -54,5 +54,10 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+# Native platform folders. This is a web-only project, but Flutter tooling
+# (e.g. IDE pub get) can regenerate these with machine-specific files.
+/android/
+/ios/
+
 # FVM Version Cache (.fvmrc is committed, the local SDK symlinks are not)
 .fvm/
