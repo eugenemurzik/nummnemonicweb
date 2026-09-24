@@ -16,6 +16,23 @@
 *.iws
 .idea/
 
+# VS Code: share project settings, keep personal files local
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# Claude Code personal settings
+.claude/settings.local.json
+
+# Secrets and credentials (CI uses GitHub secrets instead)
+.env
+.env.*
+*.pem
+*.key
+*service-account*.json
+*serviceAccount*.json
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
@@ -25,6 +42,7 @@
 .pub-cache/
 .pub/
 /build/
+/coverage/
 
 # Firebase – this is necessary if you use Firebase since it could otherwise
 # lead to leaking of private certificates to your repository, which is no bueno.

@@ -48,6 +48,13 @@ sizes and fail on layout overflow.
 
 GitHub Actions (`.github/workflows/firebase-hosting-pull-request.yml`):
 
-- Pull requests to `main` deploy to a Firebase preview channel that expires
-  after 7 days.
-- Pushes to `main` deploy to the live site.
+- Pull requests to `main` run the checks and deploy to a Firebase preview
+  channel that expires after 7 days.
+- Pushes to `main` run the checks only.
+
+Live deploys to https://nummnemonic.web.app are manual:
+
+```sh
+fvm flutter build web --release --wasm
+firebase deploy --only hosting
+```

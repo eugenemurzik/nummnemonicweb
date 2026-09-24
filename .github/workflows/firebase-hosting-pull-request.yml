@@ -1,4 +1,6 @@
-name: Flutter Firebase Deployment
+# Pushes to main only run the checks. Live deploys are manual for now:
+#   fvm flutter build web --release --wasm && firebase deploy --only hosting
+name: Flutter Web CI
 on:
   push:
     branches:
@@ -53,20 +55,3 @@ jobs:
           expires: 7d
           projectId: nummnemonic
 
-  deploy_live:
-    name: Deploy to live
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build_web
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: web-build
-          path: build/web
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NUMMNEMONIC }}
-          channelId: live
-          projectId: nummnemonic
