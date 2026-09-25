@@ -8,15 +8,15 @@ import '../../../../core/widgets/section_heading.dart';
 const _screenshots = [
   (
     asset: 'assets/images/screenshot_associations.webp',
-    label: 'The app listing numbers 1 to 20 with a word for each',
+    label: 'Turn digits into associations: numbers listed with a word for each',
   ),
   (
     asset: 'assets/images/screenshot_custom_system.webp',
-    label: 'Editing your own word for each number',
+    label: 'Build your own memory system: edit the word for each number',
   ),
   (
-    asset: 'assets/images/screenshot_onboarding.webp',
-    label: 'Onboarding: turn numbers into associations your brain remembers',
+    asset: 'assets/images/screenshot_pin_breakdown.webp',
+    label: 'Never forget PINs again: a number broken down into memorable words',
   ),
 ];
 
